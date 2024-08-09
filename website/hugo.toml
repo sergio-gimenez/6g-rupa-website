@@ -1,0 +1,3 @@
+baseURL = 'https://example.org/'
+languageCode = 'en-us'
+title = '6G-Recursive User Plane Architecture'
