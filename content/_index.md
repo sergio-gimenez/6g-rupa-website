@@ -5,7 +5,7 @@ showDate: false
 layout: "simple"
 ---
 
-Brief explanation of what is this
+A flexible, scalable, efficient data plane for future mobile networks
 
 {{< button href="/about/" target="_self" >}}
 :thinking_face: What's this?

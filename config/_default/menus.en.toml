@@ -23,10 +23,10 @@ pageRef = "research"
 weight = 10
 
 
-[[main]]
-name = ":megaphone: News"
-pageRef = "news"
-weight = 20
+# [[main]]
+# name = ":megaphone: News"
+# pageRef = "news"
+# weight = 20
 
 [[main]]
 name = ":envelope: Contact"
