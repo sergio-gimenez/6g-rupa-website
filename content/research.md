@@ -14,7 +14,7 @@ A position paper that introduces the core concepts of 6G-RUPA, outlining its pot
 
 {{< alert "pencil" >}}
 
-* 📄 Giménez-Antón, Sergio, Eduard Grasa, Jordi Perelló, and Andrés Cárdenas. 2024. "**6G-RUPA: A Flexible, Scalable, and Energy-Efficient User Plane Architecture for Next-Generation Mobile Networks**" Computers 13, no. 8: 186. [Read full article here](https://doi.org/10.3390/computers13080186).
+* 📄 Giménez-Antón, Sergio, Eduard Grasa, Jordi Perelló, and Andrés Cárdenas. 2024. "[**6G-RUPA: A Flexible, Scalable, and Energy-Efficient User Plane Architecture for Next-Generation Mobile Networks**](https://doi.org/10.3390/computers13080186)" Computers 13, no. 8: 186.
 {{< /alert  >}}
 
 
