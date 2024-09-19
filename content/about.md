@@ -7,7 +7,7 @@ showTableOfContents: true
 
 Welcome! :wave: This website is all about a new paradigm for future mobile networks, specifically for the so called 6G.
 
-## What are we researching?
+## What are we researching? 🔍
 
 We're researching a more flexible way to provide a data plane for mobile networks. It's what we call **6G-RUPA** (6G Recursive User Plane Architecture). That sounds like a lot of jargon, right? Let's break it down:
 
@@ -16,15 +16,21 @@ We're researching a more flexible way to provide a data plane for mobile network
 * We're providing mechanisms to effectively build what is called a *network of networks* 🌐
 * Our ideas could help create new apps and services that aren't possible right now :sparkles:
 
-## Why This Matters
+## Why This Matters 🌟
 
-Mobile networks have been evolving rapidly over the past few decades. However, there are some protocols, specifically the so-called "user plane protocols" 📡 (which handle the actual transfer of user data) that had remained untouched for almost 30 years. We believe that by rethinking how this part of mobile networks works, we can create more efficient and sustainable mobile networks for the future.
+Mobile networks have been evolving rapidly over the past few decades. However, there are some protocols, specifically the so-called "user plane protocols" 📡 (which handle the actual transfer of user data) that had remained untouched **for almost 30 years**!
 
-## Who's Behind This?
+We believe that by rethinking how this part of mobile networks work, we can create more **efficient** and **sustainable** mobile networks for the future.
 
-Hi there! I'm [Sergio Gimenez](https://sergiogimenez.com). I'm a PhD student working on big ideas for future mobile networks. I created this website to share my research in a way that's easy for everyone to understand. But I'm not alone! My supervisors [Edu Grasa](https://www.linkedin.com/in/eduard-grasa-2aa97b8/) and [Jordi Perelló](https://personals.ac.upc.edu/perello/) support and guide me in this journey.
+## Who's Behind This? 👥
 
-## What We're Doing
+I'm [Sergio Gimenez](https://sergiogimenez.com), a PhD student working on ideas for future mobile networks.
+
+I created this website to share my research in a way that's easy for everyone to understand. 
+
+But I'm not alone! My supervisors [Edu Grasa](https://www.linkedin.com/in/eduard-grasa-2aa97b8/) and [Jordi Perelló](https://personals.ac.upc.edu/perello/) support and guide me in this journey.
+
+## What We're Doing 📚
 
 We believe in sharing knowledge openly. On this website, you can:
 
