@@ -75,9 +75,9 @@ fingerprintAlgorithm = "sha256"
   # site = "ABC12345"
 
 [plausibleAnalytics]
-  # domain = "blog.yoursite.com"
-  # event = ""
-  # script = ""
+  domain = "6grupa.com"
+  event = "https://plausible.sergiogimenez.com/api/event"
+  script = "https://plausible.sergiogimenez.com/js/script.js"
 
 #[umamiAnalytics]
 #  site = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
