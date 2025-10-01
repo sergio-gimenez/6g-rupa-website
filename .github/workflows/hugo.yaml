@@ -32,7 +32,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      HUGO_VERSION: 0.135.0
+      HUGO_VERSION: 0.128.0
     steps:
       - name: Install Hugo CLI
         run: |
@@ -45,52 +45,20 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
-      - name: Setup Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: '1.22'
-          cache: true
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
-      - name: Clean Hugo module cache
-        run: hugo mod clean
-      - name: Get Hugo modules
-        run: |
-          hugo mod get
-          hugo mod tidy
-      - name: Vendor Hugo modules
-        run: hugo mod vendor
-      - name: Verify Hugo modules
-        run: hugo mod verify
       - name: Install Node.js dependencies
         run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
-      - name: Debug vendored modules
-        run: |
-          echo "Checking vendored modules:"
-          ls -la _vendor/github.com/jpanther/congo/v2/layouts/
-          echo "Checking shortcodes:"
-          ls -la _vendor/github.com/jpanther/congo/v2/layouts/_shortcodes/
-          echo "Testing if shortcodes exist:"
-          test -f _vendor/github.com/jpanther/congo/v2/layouts/_shortcodes/button.html && echo "button.html exists" || echo "button.html missing"
-          test -f _vendor/github.com/jpanther/congo/v2/layouts/_shortcodes/alert.html && echo "alert.html exists" || echo "alert.html missing"
       - name: Build with Hugo
         env:
           HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
           HUGO_ENVIRONMENT: production
           TZ: Europe/Madrid
-          GOCACHE: ${{ runner.temp }}/go-cache
-          GOMODCACHE: ${{ runner.temp }}/go-mod-cache
         run: |
-          echo "Current working directory: $(pwd)"
-          echo "Hugo version: $(hugo version)"
-          echo "Module graph:"
-          hugo mod graph
           hugo \
             --gc \
             --minify \
-            --ignoreVendorPaths="" \
-            --verbose \
             --baseURL "${{ steps.pages.outputs.base_url }}/"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
