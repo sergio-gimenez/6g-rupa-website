@@ -32,7 +32,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      HUGO_VERSION: 0.128.0
+      HUGO_VERSION: 0.135.0
     steps:
       - name: Install Hugo CLI
         run: |
@@ -49,18 +49,35 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: '1.22'
+          cache: true
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
+      - name: Clean Hugo module cache
+        run: hugo mod clean
       - name: Get Hugo modules
-        run: hugo mod get
+        run: |
+          hugo mod get
+          hugo mod tidy
+      - name: Verify Hugo modules
+        run: hugo mod verify
       - name: Install Node.js dependencies
         run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
+      - name: Debug Hugo modules
+        run: |
+          echo "Hugo version:"
+          hugo version
+          echo "Module graph:"
+          hugo mod graph
+          echo "Module list:"
+          hugo list all
       - name: Build with Hugo
         env:
           HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
           HUGO_ENVIRONMENT: production
           TZ: Europe/Madrid
+          GOCACHE: ${{ runner.temp }}/go-cache
+          GOMODCACHE: ${{ runner.temp }}/go-mod-cache
         run: |
           hugo \
             --gc \
