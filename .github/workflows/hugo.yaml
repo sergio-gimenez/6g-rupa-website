@@ -65,6 +65,15 @@ jobs:
         run: hugo mod verify
       - name: Install Node.js dependencies
         run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
+      - name: Debug vendored modules
+        run: |
+          echo "Checking vendored modules:"
+          ls -la _vendor/github.com/jpanther/congo/v2/layouts/
+          echo "Checking shortcodes:"
+          ls -la _vendor/github.com/jpanther/congo/v2/layouts/_shortcodes/
+          echo "Testing if shortcodes exist:"
+          test -f _vendor/github.com/jpanther/congo/v2/layouts/_shortcodes/button.html && echo "button.html exists" || echo "button.html missing"
+          test -f _vendor/github.com/jpanther/congo/v2/layouts/_shortcodes/alert.html && echo "alert.html exists" || echo "alert.html missing"
       - name: Build with Hugo
         env:
           HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
@@ -73,9 +82,15 @@ jobs:
           GOCACHE: ${{ runner.temp }}/go-cache
           GOMODCACHE: ${{ runner.temp }}/go-mod-cache
         run: |
+          echo "Current working directory: $(pwd)"
+          echo "Hugo version: $(hugo version)"
+          echo "Module graph:"
+          hugo mod graph
           hugo \
             --gc \
             --minify \
+            --ignoreVendorPaths="" \
+            --verbose \
             --baseURL "${{ steps.pages.outputs.base_url }}/"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
