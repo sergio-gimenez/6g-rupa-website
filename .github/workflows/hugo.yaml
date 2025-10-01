@@ -59,18 +59,12 @@ jobs:
         run: |
           hugo mod get
           hugo mod tidy
+      - name: Vendor Hugo modules
+        run: hugo mod vendor
       - name: Verify Hugo modules
         run: hugo mod verify
       - name: Install Node.js dependencies
         run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
-      - name: Debug Hugo modules
-        run: |
-          echo "Hugo version:"
-          hugo version
-          echo "Module graph:"
-          hugo mod graph
-          echo "Module list:"
-          hugo list all
       - name: Build with Hugo
         env:
           HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
