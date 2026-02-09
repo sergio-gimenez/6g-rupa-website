@@ -1,0 +1,40 @@
+{{/*
+  Usage:
+    {{< pdf src="file.pdf" title="Poster" height="900" >}}
+
+  - src can be a page resource (page bundle) or a site-relative URL.
+  - Adds an in-page preview plus open/download actions.
+*/}}
+
+{{- $src := (.Get "src") | default "" -}}
+{{- $title := (.Get "title") | default "PDF" -}}
+{{- $height := (.Get "height") | default "900" -}}
+
+{{- $url := "" -}}
+{{- with $src -}}
+  {{- with $.Page.Resources.GetMatch . -}}
+    {{- $url = .RelPermalink -}}
+  {{- else -}}
+    {{- $url = . | relURL -}}
+  {{- end -}}
+{{- end -}}
+
+<section class="pdf-card" aria-label="{{ $title }}">
+  <div class="pdf-card__header">
+    <div class="pdf-card__title">{{ $title }}</div>
+    <div class="pdf-card__actions">
+      <a class="pdf-button" href="{{ $url }}" target="_blank" rel="noopener">Open</a>
+      <a class="pdf-button pdf-button--primary" href="{{ $url }}" download>Download</a>
+    </div>
+  </div>
+
+  <div class="pdf-embed" style="--pdf-height: {{ $height }}px">
+    <object data="{{ $url }}" type="application/pdf" aria-label="{{ $title }} preview">
+      <iframe src="{{ $url }}" title="{{ $title }} preview" loading="lazy"></iframe>
+    </object>
+  </div>
+
+  <div class="pdf-card__hint">
+    If the preview does not load in your browser, use <a href="{{ $url }}" target="_blank" rel="noopener">Open</a> or <a href="{{ $url }}" download>Download</a>.
+  </div>
+</section>
