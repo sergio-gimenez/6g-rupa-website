@@ -1,82 +1,69 @@
 ---
-title: "Understanding Network slicing from the UPF Perspective"
+title: "Understanding Network Slicing from the UPF Perspective"
+description: "A practical explanation of what 3GPP network slicing changes (and what it does not) when you look at the user plane and the UPF."
 date: 2024-07-16
 lastmod: 2024-09-16
 categories:
     - "Article"
 tags:
     - "6G-RUPA"
-    - "Position Paper"
-    - "MDPI"
-    - "Publication"
+    - "5G"
+    - "3GPP"
+    - "UPF"
+    - "Network Slicing"
 ---
 
-## A quick reminder about 5G mobile network layers
+This post clarifies what a "network slice" means in 3GPP terms, but from a user-plane (UPF) perspective. The punchline is that slicing mostly shows up as *policy and resource partitioning* around otherwise familiar user-plane mechanisms.
 
-First, in mobile networks you have a fixed amount of layers:
+## A quick reminder: 5G user-plane layering
 
-![Layer view in the 3GPP way](./3gpp_way_layers.png)
+In 3GPP-style diagrams, you can think about the user plane as a set of layered transports/mappings:
 
-If we look this with the lens of the IPC Model looks like:
+![Layer view in the 3GPP way](./images/3gpp_way_layers.png)
 
-![IPC Model view](./ipc_model_layers.png)
+If we look at the same idea through the IPC model lens, it maps cleanly to a recursive stack:
 
-So essentially PDU-flows are mapped into Service data flows in what we
-call the N DIF Layer. Service Data Flows then are mapped: First in the
-N-1-core-DIF as "QoS Flows" (as per 3GPP jargon). Then, in the
-N-1-radio-DIF as "Data Radio Bearer" (as per 3GPP jargon). I also find
-this diagram a bit helpful to understand what I just wrote:
+![IPC Model view](./images/ipc_model_layers.png)
 
-![QoS Flows in
-5G](../../presentations/20251015_presentation/qos_flows_pdu.png)
+Concretely, the mental model used later in this post is:
+
+- At the "service" level (what we call the N-DIF layer in IPC terms), the UE has one or more PDU sessions / PDU flows.
+- These are mapped onto lower-layer transport constructs. In 3GPP jargon you will see **QoS flows** (core side) and **data radio bearers (DRBs)** (radio side).
+
+The details vary by deployment, but the important point is that there are multiple layers where *policy* can decide how traffic is treated, without necessarily changing forwarding.
 
 ## Network Slice Definition
 
-Made this reminder, then if we look at the definition of 3GPP for
-"Network Slice" does not tells us much. It says:
+With that reminder, the 3GPP definitions of "network slice" are intentionally broad:
 
--   A set of network functions and corresponding resources necessary to
-    provide the required telecommunication services and network
-    capabilities [1].
--   A logical network that provides specific network capabilities and
-    network characteristics [2].
+- A set of network functions and corresponding resources necessary to provide the required telecommunication services and network capabilities [1].
+- A logical network that provides specific network capabilities and network characteristics [2].
 
-But I have been doing archeology in the specs of 3GPP and I came up with
-a bit better definition:
+If you want an operational definition that is useful at the UPF level:
 
-In the context of 5G, a network slice instance is a set of network and
-compute resources that can be used on top of existing infrastructure and
-network functions. It's something more at administrative level, but not
-at network level. At network level, different PDU sessions belonging to
-the same UE can be different slices if they have different NSI ID (the
-identifier of the network slice instance).
+In 5G, a **network slice instance (NSI)** is a set of network + compute resources reserved/managed to deliver a given service. This is primarily an *administrative and orchestration* construct. On the wire, it shows up as identifiers and policies that steer how resources are allocated and how traffic is admitted.
 
-In terms of the IPC Model, a network slice would be two separate N-flows
-that have some sort of field in a policy that tells you if they belong
-or not to the same administrative domain. So essentially seems like
-network slicing is just a policy and management overlay applied to
-existing mechanisms. Let's see an example:
+Practically: two PDU sessions for the same UE may be associated with different slices if they are tied to different S-NSSAI / NSI selection outcomes, even if the packets ultimately traverse the same physical infrastructure.
 
-Imagine a virtual operator (MNVO) that uses the infra of a public
-operator (PLMNO) that has his own infrastructure. The PLMNO "rents" to
-the MNVO part of the network. A way to do that is that the PLMNO gives
-the MNVO an instance of a network slice.
+In IPC-model terms, you can think of slicing as multiple N-flows that carry (or are associated with) a slice context used by policy: admission control, QoS enforcement, resource caps, accounting, etc. The key idea is that slicing is mostly a **policy/management overlay** applied to existing user-plane mechanisms.
 
-So in 6G-RUPA, when a UE (belonging to the MVNO) requests a new N-flow (a
-PDU session in 5G), it passes its NSI ID as part of the flow allocation
-request. The PLMNO's Flow Allocator receives this request, checks the
-NSI ID against its policies, and verifies: Is this a valid MVNO? Does
-the requested QoS profile fit the service agreement for this slice? Has
-this slice exceeded its maximum number of PDU sessions? If these policy
-checks pass, the Flow Allocator proceeds to create the flow, mapping it
-onto the underlying (N-1) DIFs (radio and core).
+Let's make this concrete.
 
-At the end, in terms of forwarding state we just don't care about
-slicing. The extra flow "in parallel" has the same source and
-destination, so in the forwarding table they are both agreggated. The
-RMT is completely unaware of NSI IDs, MVNOs, or "slices." It just sees
-two (or two thousand) N-flows all addressed to the same destination
-address and aggregates them through the same forwarding-table entry.
+Imagine a mobile virtual network operator (**MVNO**) using the infrastructure of a public land mobile network operator (**PLMNO**). The PLMNO "rents" part of the network to the MVNO; one way to implement that is to give the MVNO access to (one or more) slice instances with defined limits and service profiles.
+
+In 6G-RUPA terms: when a UE (belonging to the MVNO) requests a new N-flow (analogous to establishing a PDU session in 5G), it includes the slice context (e.g., an NSI identifier) as part of the flow allocation request.
+
+The PLMNO's flow allocator can then enforce slice policies such as:
+
+- Is this slice valid for this MVNO / subscriber?
+- Does the requested QoS profile fit the service agreement for this slice?
+- Has this slice exceeded configured caps (e.g., number of sessions, throughput, aggregate resource usage)?
+
+If the checks pass, the allocator creates the flow and maps it onto the underlying (N-1) DIFs (radio and core).
+
+Crucially, at the level of **forwarding state**, slicing often does not require new forwarding entries. If two flows have the same (topological) destination, they can still be aggregated under the same forwarding-table entry. The forwarding function (e.g., the RMT in RINA terms) does not need to understand MVNOs, NSI IDs, or "slices"; it only needs to forward.
+
+In other words: slicing is largely about *who is allowed to create which flows* and *what resources those flows can consume*, not about changing the basic forwarding paradigm.
 
 ## References
 
