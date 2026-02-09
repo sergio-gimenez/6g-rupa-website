@@ -11,8 +11,8 @@ autoSwitchAppearance = true
 
 defaultThemeColor = "#FFFFFF"
 
-enableSearch = false
-enableCodeCopy = false
+enableSearch = true
+enableCodeCopy = true
 enableImageLazyLoading = true
 enableImageWebp = true
 
@@ -28,12 +28,12 @@ fingerprintAlgorithm = "sha256"
 
 [footer]
   showCopyright = true
-  showThemeAttribution = true
+  showThemeAttribution = false
   showAppearanceSwitcher = true
   showScrollToTop = true
 
 [homepage]
-  layout = "profile" # valid options: page, profile, custom
+  layout = "custom" # valid options: page, profile, custom
   showRecent = false
   recentLimit = 5
 
@@ -41,7 +41,7 @@ fingerprintAlgorithm = "sha256"
   showDate = true
   showDateUpdated = false
   showAuthor = false
-  showBreadcrumbs = false
+  showBreadcrumbs = true
   showDraftLabel = true
   showEdit = false
   # editURL = "https://github.com/username/repo/"
@@ -49,8 +49,8 @@ fingerprintAlgorithm = "sha256"
   showHeadingAnchors = true
   showPagination = true
   invertPagination = false
-  showReadingTime = false
-  showTableOfContents = false
+  showReadingTime = true
+  showTableOfContents = true
   showTaxonomies = false
   showWordCount = false
   showComments = false
@@ -58,8 +58,8 @@ fingerprintAlgorithm = "sha256"
   sharingLinks = ["x-twitter", "mastodon", "linkedin", "email", "threads"]
 
 [list]
-  showBreadcrumbs = false
-  showSummary = false
+  showBreadcrumbs = true
+  showSummary = true
   showTableOfContents = false
   showTaxonomies = false
   groupByYear = true

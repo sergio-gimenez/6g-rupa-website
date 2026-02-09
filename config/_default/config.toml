@@ -6,7 +6,7 @@ baseURL = "https://6grupa.com/"
 defaultContentLanguage = "en"
 
 enableRobotsTXT = true
-summaryLength = 0
+summaryLength = 30
 
 [pagination]
   pagerSize = 10

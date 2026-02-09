@@ -1,5 +1,6 @@
 ---
-title: '6G Recursive User Plane Architecture'
+title: "📝 Posts"
 showTableOfContents: false
 showDate: false
+layout: "list"
 ---

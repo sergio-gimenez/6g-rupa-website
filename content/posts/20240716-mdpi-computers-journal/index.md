@@ -1,6 +1,5 @@
 ---
 title: "6G-RUPA Initial Position Paper Published in MDPI Computers Journal"
-description: "Our position paper introducing 6G-RUPA has been published and selected as the journal cover."
 date: 2024-07-16
 lastmod: 2024-09-16
 categories:

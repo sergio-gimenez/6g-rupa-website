@@ -14,8 +14,8 @@ title = "6G-Recursive User Plane Architecture"
 
 [params.author]
   name = "6G-RUPA"
-  image = "img/6g-rupa-logo.png"
-  # headline = " A data plane for the networks of the future"
+  image = "img/6grupa-logo.png"
+  headline = "A data plane for the networks of the future"
   # bio = "A little bit about you"
   # links = [
   #   { email = "mailto:hello@your_domain.com" },

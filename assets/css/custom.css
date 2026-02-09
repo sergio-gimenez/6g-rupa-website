@@ -1,0 +1,168 @@
+/* Custom styles for 6G-RUPA website */
+
+/* ===== Animations ===== */
+
+/* Animated gradient text for hero title — avocado palette (lime + emerald) */
+.hero-gradient {
+  background: linear-gradient(-45deg, #84cc16, #10b981, #a3e635, #34d399);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Gentle floating animation for profile image */
+.floating {
+  animation: floating 6s ease-in-out infinite;
+}
+
+@keyframes floating {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+/* Page entrance animation */
+.page-transition {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== Buttons ===== */
+
+.button-glow {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.button-glow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.button-glow:hover::before {
+  left: 100%;
+}
+
+.button-glow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== Cards ===== */
+
+/* Glassmorphism card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 1rem 1.25rem;
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.dark .glass-card {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .glass-card:hover {
+  background: rgba(0, 0, 0, 0.35);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Publication / article card with gradient top border — avocado palette */
+.publication-card {
+  background: linear-gradient(135deg, rgba(132, 204, 22, 0.06) 0%, rgba(16, 185, 129, 0.03) 100%);
+  border: 1px solid rgba(132, 204, 22, 0.15);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.publication-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #84cc16, #10b981, #34d399);
+}
+
+.publication-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(132, 204, 22, 0.15);
+}
+
+.dark .publication-card {
+  background: linear-gradient(135deg, rgba(132, 204, 22, 0.1) 0%, rgba(16, 185, 129, 0.06) 100%);
+  border: 1px solid rgba(132, 204, 22, 0.25);
+}
+
+.dark .publication-card:hover {
+  box-shadow: 0 10px 30px rgba(132, 204, 22, 0.2);
+}
+
+/* ===== News items — avocado palette ===== */
+
+.news-item {
+  border-left: 3px solid transparent;
+  border-image: linear-gradient(135deg, #84cc16, #65a30d) 1;
+  padding-left: 1rem;
+  transition: all 0.3s ease;
+}
+
+.news-item:hover {
+  border-image: linear-gradient(135deg, #10b981, #34d399) 1;
+  transform: translateX(4px);
+}
+
+/* ===== Typography helpers ===== */
+
+.subtitle-enhanced {
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 1.6;
+}
+
+/* ===== Responsive ===== */
+
+@media (max-width: 768px) {
+  .hero-gradient {
+    font-size: 4.5rem;
+  }
+
+  .glass-card {
+    padding: 1.25rem;
+  }
+}

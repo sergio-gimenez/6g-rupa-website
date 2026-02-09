@@ -1,6 +1,5 @@
 ---
 title: "Research Stay at Boston University Fall Semester 2025"
-description: "Spending a semester at BU working with Professor John Day and the team on 6G-RUPA and RINA."
 date: 2025-09-11
 lastmod: 2025-09-11
 categories:
